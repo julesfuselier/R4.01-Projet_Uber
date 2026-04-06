@@ -1,0 +1,22 @@
+<div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc;">
+    <h2>Passer une commande</h2>
+    <form method="POST" action="/commandes/create">
+
+        <div style="margin-bottom: 15px;">
+            <label>Adresse de livraison :</label>
+            <input type="text" name="adresseLivraison" required style="width: 100%; padding: 8px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label>Date de livraison souhaitée :</label>
+            <input type="date" name="dateLivraison" required style="width: 100%; padding: 8px;">
+        </div>
+
+        <h3>Choisissez vos menus :</h3>
+        {LISTE_MENUS}
+
+        <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer;">
+            Valider la commande
+        </button>
+    </form>
+</div>
