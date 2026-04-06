@@ -39,14 +39,21 @@ public class MenuResource {
     }
 
     @GET
+    @Produces("application/json")
+    public String getAllMenuJSON() {
+        return this.menuService.getAllMenuJSON();
+    }
+
+    @GET
     @Path("{id}")
     @Produces("application/json")
     public String getMenu(@PathParam("id") int menuId) {
-        String result = this.menuService.getBookJSON(menuId);
+        String result = this.menuService.getMenuJSON(menuId);
 
         if (result == null)
             throw new NotFoundException();
 
         return result;
     }
+
 }

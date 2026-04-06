@@ -17,6 +17,7 @@ public class PlatResume {
     @JsonbProperty("prix")
     private double price;
 
+    /** Dish's constructor for Jakarta **/
     public PlatResume() {}
 
     /** Dish's constructor **/

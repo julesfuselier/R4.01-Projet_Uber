@@ -3,6 +3,8 @@ package fr.univamu.iut.menu;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 
+import java.util.ArrayList;
+
 public class MenuService {
 
     protected MenuRepositoryInterface menuRepo;
@@ -16,7 +18,7 @@ public class MenuService {
      * @param menuId
      * @return a string on JSON format
      */
-    public String getBookJSON(int menuId) {
+    public String getMenuJSON(int menuId) {
         String result = null;
         Menu myMenu = menuRepo.getMenu(menuId);
 
@@ -26,6 +28,24 @@ public class MenuService {
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
+        }
+
+        return result;
+    }
+
+    /**
+     * Method returning all menus
+     * @return a string on JSON format
+     */
+    public String getAllMenuJSON() {
+        ArrayList<Menu> allMenu = menuRepo.getAllMenu();
+
+        String result = null;
+
+        try (Jsonb jsonb = JsonbBuilder.create()) {
+            result = jsonb.toJson(allMenu);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
 
         return result;

@@ -1,11 +1,13 @@
 package fr.univamu.iut.menu;
 
 import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbPropertyOrder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonbPropertyOrder({ "id", "nom", "createurId", "createurNom", "dateCreation", "dateMiseAJour", "plats", "prixTotal" })
 public class Menu {
 
     /** Menu's id **/
@@ -89,6 +91,16 @@ public class Menu {
         }
 
         return sb.append("}").toString();
+    }
+
+    public void addPlat (PlatResume plat) {
+        this.plats.add(plat);
+        this.updateDate = LocalDate.now();
+    }
+
+    public void removePlat(int platId) {
+        this.plats.removeIf(plat -> plat.getId() == platId);
+        this.updateDate = LocalDate.now();
     }
 
     public String toString() {
