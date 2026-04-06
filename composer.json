@@ -1,0 +1,19 @@
+{
+    "name": "fuselier/r4.01-projet_uber",
+  "autoload": {
+    "psr-4": {
+      "Domain\\": "app/Domain/",
+      "UseCase\\": "app/UseCase/",
+      "Controllers\\": "app/Controllers/"
+    }
+  },
+    "authors": [
+        {
+            "name": "Jules FUSELIER, ALLARD Loan, CANTOR Romain, AHAMED Nasser",
+            "email": "jules.fuselier@etu.univ-amu.fr"
+        }
+    ],
+  "require": {
+    "bramus/router": "~1.6"
+  }
+}
