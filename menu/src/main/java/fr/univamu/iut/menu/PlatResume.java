@@ -1,14 +1,20 @@
 package fr.univamu.iut.menu;
 
+import jakarta.enterprise.inject.Produces;
+import jakarta.json.bind.annotation.JsonbProperty;
+
 public class PlatResume {
 
     /** Dish's id **/
+    @JsonbProperty("id")
     private int id;
 
     /** Dish's name **/
+    @JsonbProperty("nom")
     private String name;
 
     /** Dish's price **/
+    @JsonbProperty("prix")
     private double price;
 
     public PlatResume() {}
