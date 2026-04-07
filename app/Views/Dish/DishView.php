@@ -14,6 +14,7 @@ class DishView
 
         foreach($plats as $plat) {
             $html = str_replace('{NOM}', htmlspecialchars($plat->name), $cardTemplate);
+            $html = str_replace('{DESCRIPTION}', htmlspecialchars($plat->description), $html);
             $html = str_replace('{PRIX}', htmlspecialchars($plat->price), $html);
             echo $html;
         }

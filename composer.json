@@ -2,6 +2,8 @@
     "name": "fuselier/r4.01-projet_uber",
   "autoload": {
     "psr-4": {
+      "Config\\": "app/",
+      "Shared\\": "app/Shared/",
       "Domain\\": "app/Domain/",
       "UseCase\\": "app/UseCase/",
       "Controllers\\": "app/Controllers/"
