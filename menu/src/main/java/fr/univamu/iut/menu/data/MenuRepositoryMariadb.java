@@ -111,21 +111,30 @@ public class MenuRepositoryMariadb implements MenuRepositoryInterface {
     }
 
     @Override
-    public boolean createMenu(Menu menu) {
-        String query = "INSERT INTO menu (nom, createur_id, date_creation, date_mise_a_jours) VALUES (?, ?, ?, ?)";
+    public Menu createMenu(Menu menu) {
+        String query = "INSERT INTO menu (nom, createur_id, date_creation, date_mise_a_jour) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement ps = dbConnection.prepareStatement(query)) {
+        try (PreparedStatement ps = dbConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, menu.getName());
             ps.setInt(2, menu.getIdCreator());
-            ps.setDate(3, Date.valueOf(LocalDate.now()));
-            ps.setDate(4, Date.valueOf(LocalDate.now()));
+            ps.setDate(3, Date.valueOf(menu.getCreationDate()));
+            ps.setDate(4, Date.valueOf(menu.getUpdateDate()));
 
-            return ps.executeUpdate() == 1;
+            int rowsAffected = ps.executeUpdate();
 
+            if (rowsAffected == 1) {
+                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        menu.setId(generatedKeys.getInt(1));
+                        return menu;
+                    }
+                }
+            }
         } catch (SQLException e) {
             System.err.print(e.getMessage());
-            return false;
         }
+
+        return null;
     }
 
     private ArrayList<PlatResume> getPlatsForMenu(int menuId) {

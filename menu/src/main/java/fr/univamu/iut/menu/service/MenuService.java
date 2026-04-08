@@ -1,5 +1,6 @@
 package fr.univamu.iut.menu.service;
 
+import fr.univamu.iut.menu.PlatsUtilisateursClient;
 import fr.univamu.iut.menu.data.MenuRepositoryInterface;
 import fr.univamu.iut.menu.metier.Menu;
 import jakarta.json.bind.Jsonb;
@@ -11,8 +12,11 @@ public class MenuService {
 
     protected MenuRepositoryInterface menuRepo;
 
+    private PlatsUtilisateursClient client;
+
     public MenuService(MenuRepositoryInterface menuRepo) {
         this.menuRepo = menuRepo;
+        this.client = new PlatsUtilisateursClient();
     }
 
     /**
@@ -53,21 +57,20 @@ public class MenuService {
         return result;
     }
 
-    public String createMenuJSON(String name, int idCreator) {
-        Menu newMenu = new Menu(name, idCreator);
+    public Menu createMenu(String name, int idCreator) {
 
-        boolean created = this.menuRepo.createMenu(newMenu);
-
-        if (!created) return null;
-
-        String result = null;
-        try (Jsonb jsonb = JsonbBuilder.create()) {
-            result = jsonb.toJson(newMenu);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
+        if (name == null || name.trim().isEmpty() || idCreator <= 0) {
+            throw new IllegalArgumentException("Données d'entrée invalides");
         }
 
-        return result;
+        String creatorName = this.client.getUserNameById(idCreator);
+        if (creatorName == null)
+            return null;
+
+        Menu newMenu = new Menu(name, idCreator);
+        newMenu.setNameCreator(creatorName);
+
+        return this.menuRepo.createMenu(newMenu);
     }
 
 }

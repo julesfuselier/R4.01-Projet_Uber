@@ -7,10 +7,13 @@ import fr.univamu.iut.menu.service.MenuService;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 import java.net.ResponseCache;
+import java.net.URI;
 
 @Path("/menus")
 @ApplicationScoped
@@ -64,15 +67,29 @@ public class MenuResource {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createMenu(MenuInput input) {
-        String result = this.menuService.createMenuJSON(input.nom, input.createurId);
+    public Response createMenu(MenuInput input) throws Exception {
+        try {
+            if (input == null || input.name == null)
+                return Response.status(Response.Status.BAD_REQUEST).entity("Le nom du menu est requis").build();
 
-        if (result == null)
-            throw new BadRequestException();
+            Menu createdMenu = this.menuService.createMenu(input.name, input.creatorId);
 
-        return Response.status(Response.Status.CREATED)
-                .entity(result)
-                .build();
+            if (createdMenu == null)
+                return Response.status(Response.Status.NOT_FOUND).entity("Créateur introuvable dans l'API Plats et Utilisateurs").build();
+
+            String result = null;
+            try (Jsonb jsonb = JsonbBuilder.create()) {
+                result = jsonb.toJson(createdMenu);
+            }
+
+            URI location = URI.create("menus/" + createdMenu.getId());
+            return Response.status(Response.Status.CREATED)
+                    .location(location)
+                    .entity(result)
+                    .build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
 }

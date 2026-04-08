@@ -25,7 +25,7 @@ public interface MenuRepositoryInterface {
 
     /**
      * Method that return true if menu created, else false
-     * @return boolean
+     * @return Menu
      */
-    public boolean createMenu(Menu menu);
+    public Menu createMenu(Menu menu);
 }
