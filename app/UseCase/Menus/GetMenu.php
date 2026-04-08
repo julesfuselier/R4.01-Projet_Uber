@@ -1,25 +1,14 @@
 <?php
 namespace UseCase\Menus;
 
-use Domain\Menu;
+use Repository\MenuRepositoryInterface;
 
 class GetMenu
 {
-    public function execute() {
-        $json = file_get_contents('http://localhost:3003/menus');
-        $menusData = json_decode($json, true);
+    public function __construct(private MenuRepositoryInterface $repo) {}
 
-        $menus = [];
-        if ($menusData) {
-            foreach($menusData as $data) {
-                $menu = new Menu();
-                $menu->id = $data['id'];
-                $menu->name = $data['nom'];
-                $menu->createdBy = $data['createurNom'];
-                $menu->totalPrice = $data['prixTotal'];
-                $menus[] = $menu;
-            }
-        }
-        return $menus;
+    public function execute(): array
+    {
+        return $this->repo->findAll();
     }
 }

@@ -4,14 +4,13 @@ namespace Controllers;
 use UseCase\Dishes\ListDishes;
 use Views\Dish\DishView;
 
-require_once __DIR__ . '/../Views/Dish/DishView.php';
-
 class DishesController
 {
-    public function showDishes() {
-        $useCase = new ListDishes();
-        $plats = $useCase->execute();
+    public function __construct(private ListDishes $listDishes) {}
 
-        DishView::render($plats);
+    public function showDishes(): void
+    {
+        $dishes = $this->listDishes->execute();
+        DishView::render($dishes);
     }
 }

@@ -2,11 +2,13 @@
     "name": "fuselier/r4.01-projet_uber",
   "autoload": {
     "psr-4": {
-      "Config\\": "app/",
-      "Shared\\": "app/Shared/",
+      "Config\\": "app/Config/",
       "Domain\\": "app/Domain/",
+      "Repository\\": "app/Repository/",
+      "Infrastructure\\": "app/Infrastructure/",
       "UseCase\\": "app/UseCase/",
-      "Controllers\\": "app/Controllers/"
+      "Controllers\\": "app/Controllers/",
+      "Views\\": "app/Views/"
     }
   },
     "authors": [
