@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
-             version="3.1">
+             version="3.0">
 
     <persistence-unit name="UberPU" transaction-type="JTA">
+        <jta-data-source>jdbc/UberDS</jta-data-source>
         <properties>
-            <property name="jakarta.persistence.jdbc.url"      value="jdbc:mysql-loanallardwebsite.alwaysdata.net/loanallardwebsite_archilogicielle"/>
-            <property name="jakarta.persistence.jdbc.user"     value="loanallardwebsite_archilogiciell"/>
-            <property name="jakarta.persistence.jdbc.password" value="-0RckPIQ"/>
-            <property name="jakarta.persistence.jdbc.driver"   value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="jakarta.persistence.sql-load-script-source" value="META-INF/sql/init.sql"/>
         </properties>
     </persistence-unit>
 
