@@ -1,5 +1,7 @@
-package fr.univamu.iut.menu;
+package fr.univamu.iut.menu.service;
 
+import fr.univamu.iut.menu.data.MenuRepositoryInterface;
+import fr.univamu.iut.menu.metier.Menu;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 

@@ -1,9 +1,12 @@
-package fr.univamu.iut.menu;
+package fr.univamu.iut.menu.data;
+
+import fr.univamu.iut.menu.metier.PlatResume;
+import fr.univamu.iut.menu.PlatsUtilisateursClient;
+import fr.univamu.iut.menu.metier.Menu;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MenuRepositoryMariadb implements MenuRepositoryInterface {
 

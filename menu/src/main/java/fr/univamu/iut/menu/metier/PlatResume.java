@@ -1,6 +1,5 @@
-package fr.univamu.iut.menu;
+package fr.univamu.iut.menu.metier;
 
-import jakarta.enterprise.inject.Produces;
 import jakarta.json.bind.annotation.JsonbProperty;
 
 public class PlatResume {

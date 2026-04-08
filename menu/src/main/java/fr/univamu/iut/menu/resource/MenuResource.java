@@ -1,11 +1,11 @@
-package fr.univamu.iut.menu;
+package fr.univamu.iut.menu.resource;
 
+import fr.univamu.iut.menu.data.MenuRepositoryInterface;
+import fr.univamu.iut.menu.service.MenuService;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
-
-import java.util.ArrayList;
 
 @Path("/menus")
 @ApplicationScoped

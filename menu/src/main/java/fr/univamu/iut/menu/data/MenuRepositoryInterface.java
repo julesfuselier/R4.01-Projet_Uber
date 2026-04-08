@@ -1,4 +1,6 @@
-package fr.univamu.iut.menu;
+package fr.univamu.iut.menu.data;
+
+import fr.univamu.iut.menu.metier.Menu;
 
 import java.util.ArrayList;
 

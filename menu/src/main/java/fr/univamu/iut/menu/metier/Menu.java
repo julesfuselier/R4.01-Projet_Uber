@@ -1,11 +1,10 @@
-package fr.univamu.iut.menu;
+package fr.univamu.iut.menu.metier;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 @JsonbPropertyOrder({ "id", "nom", "createurId", "createurNom", "dateCreation", "dateMiseAJour", "plats", "prixTotal" })
 public class Menu {

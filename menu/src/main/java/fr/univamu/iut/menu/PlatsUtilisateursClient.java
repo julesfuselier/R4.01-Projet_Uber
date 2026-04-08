@@ -1,5 +1,6 @@
 package fr.univamu.iut.menu;
 
+import fr.univamu.iut.menu.metier.PlatResume;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
