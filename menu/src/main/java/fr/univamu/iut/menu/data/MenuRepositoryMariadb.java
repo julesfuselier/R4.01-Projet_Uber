@@ -154,6 +154,29 @@ public class MenuRepositoryMariadb implements MenuRepositoryInterface {
         }
     }
 
+    @Override
+    public boolean deleteMenu(int id) {
+        String queryDeletePlats = "DELETE FROM menu_plat WHERE menu_id=?";
+        String queryDeleteMenu = "DELETE FROM menu WHERE id=?";
+
+        try {
+            try (PreparedStatement psPlats = dbConnection.prepareStatement(queryDeletePlats)) {
+                psPlats.setInt(1, id);
+                psPlats.executeUpdate();
+            }
+
+            try (PreparedStatement psMenu = dbConnection.prepareStatement(queryDeleteMenu)) {
+                psMenu.setInt(1, id);
+                int rowsAffected = psMenu.executeUpdate();
+
+                return rowsAffected == 1;
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la suppression du menu " + id + " : " + e.getMessage());
+            return false;
+        }
+    }
+
     private ArrayList<PlatResume> getPlatsForMenu(int menuId) {
         ArrayList<PlatResume> plats = new ArrayList<>();
 

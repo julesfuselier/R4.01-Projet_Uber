@@ -123,4 +123,17 @@ public class MenuResource {
         }
     }
 
+    @DELETE
+    @Path("{id}")
+    public Response deleteMenu(@PathParam("id") int id) {
+        boolean isDeleted = this.menuService.deleteMenu(id);
+
+        if (!isDeleted)
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Menu introuvable")
+                    .build();
+
+        return Response.noContent().build();
+    }
+
 }

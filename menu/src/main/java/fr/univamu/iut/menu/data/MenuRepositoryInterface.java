@@ -36,4 +36,11 @@ public interface MenuRepositoryInterface {
      * @return true if menu find, else false
      */
     public boolean updateMenuName(int id, String newName);
+
+    /**
+     * Delete menu associated with the id.
+     * @param id menu's id deleted
+     * @return true if delete success, false if the menu doesn't exist
+     */
+    public boolean deleteMenu(int id);
 }

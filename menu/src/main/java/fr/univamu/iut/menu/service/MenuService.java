@@ -85,4 +85,8 @@ public class MenuService {
         return this.menuRepo.getMenu(menuId);
     }
 
+    public boolean deleteMenu(int menuId) {
+        return this.menuRepo.deleteMenu(menuId);
+    }
+
 }
