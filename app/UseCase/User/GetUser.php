@@ -1,6 +1,6 @@
 <?php
 
-namespace User;
+namespace UseCase\User;
 class GetUser
 {
 

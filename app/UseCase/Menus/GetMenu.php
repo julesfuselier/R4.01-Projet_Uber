@@ -6,7 +6,7 @@ use Domain\Menu;
 class GetMenu
 {
     public function execute() {
-        $json = file_get_contents('http://localhost:3004/menus');
+        $json = file_get_contents('http://localhost:3003/menus');
         $menusData = json_decode($json, true);
 
         $menus = [];
