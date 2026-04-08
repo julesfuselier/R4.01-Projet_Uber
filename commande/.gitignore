@@ -1,5 +1,5 @@
 # Environnement et secrets
-.env/
+.env
 
 # Fichiers de compilation Maven
 target/
