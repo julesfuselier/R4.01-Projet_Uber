@@ -5,11 +5,13 @@
              version="3.1">
 
     <persistence-unit name="UberPU" transaction-type="JTA">
-        <!-- Remplacer par le nom JNDI configuré dans GlassFish -->
-        <!-- <jta-data-source>jdbc/uberDB</jta-data-source> -->
         <properties>
-            <!-- Permet de générer les tables automatiquement au déploiement -->
+            <property name="jakarta.persistence.jdbc.url"      value="jdbc:mysql-loanallardwebsite.alwaysdata.net/loanallardwebsite_archilogicielle"/>
+            <property name="jakarta.persistence.jdbc.user"     value="loanallardwebsite_archilogiciell"/>
+            <property name="jakarta.persistence.jdbc.password" value="-0RckPIQ"/>
+            <property name="jakarta.persistence.jdbc.driver"   value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
         </properties>
     </persistence-unit>
+
 </persistence>
