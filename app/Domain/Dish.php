@@ -8,6 +8,6 @@ class Dish
     public $name;
     public $description;
     public $price;
-
-
+    public $isAvailable;
+    public $ownerId;
 }

@@ -3,15 +3,17 @@ namespace UseCase\Menus;
 
 class CreateMenu
 {
-    public function execute($nomMenu, $createurNom, $platsIds) {
-        $jsonPlats = file_get_contents('http://localhost:3003/plats');
-        $tousLesPlats = json_decode($jsonPlats, true);
+    public function execute($nomMenu, $createurNom, $platsIds)
+    {
+        $jsonPlats = file_get_contents(__DIR__ . '/../../../public/plats-utilisateurs.json');
+        $dataPlats = json_decode($jsonPlats, true);
+        $tousLesPlats = $dataPlats['plats'] ?? [];
 
         $platsPourLeMenu = [];
         $prixTotal = 0;
 
         if ($tousLesPlats && is_array($platsIds)) {
-            foreach($tousLesPlats as $plat) {
+            foreach ($tousLesPlats as $plat) {
                 if (in_array($plat['id'], $platsIds)) {
                     $platsPourLeMenu[] = [
                         "id" => (int) $plat['id'],
@@ -23,7 +25,17 @@ class CreateMenu
             }
         }
 
-        $data = [
+        $menusFile = __DIR__ . '/../../../public/menus.json';
+        $menusData = file_exists($menusFile) ? json_decode(file_get_contents($menusFile), true) : [];
+        if (!is_array($menusData))
+            $menusData = [];
+        // Support structure with or without root key "menus"
+        $menusList = isset($menusData['menus']) ? $menusData['menus'] : $menusData;
+
+        $newId = count($menusList) > 0 ? max(array_column($menusList, 'id')) + 1 : 1;
+
+        $nouveauMenu = [
+            "id" => $newId,
             "nom" => $nomMenu,
             "createurNom" => $createurNom,
             "dateCreation" => date("Y-m-d"),
@@ -31,20 +43,17 @@ class CreateMenu
             "plats" => $platsPourLeMenu,
             "prixTotal" => $prixTotal
         ];
-        $payload = json_encode($data);
 
-        $ch = curl_init('http://localhost:3004/menus');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($payload)
-        ]);
+        $menusList[] = $nouveauMenu;
 
-        $result = curl_exec($ch);
-        curl_close($ch);
+        if (isset($menusData['menus'])) {
+            $menusData['menus'] = $menusList;
+        } else {
+            $menusData = $menusList;
+        }
 
-        return $result;
+        file_put_contents($menusFile, json_encode($menusData, JSON_PRETTY_PRINT));
+
+        return true;
     }
 }

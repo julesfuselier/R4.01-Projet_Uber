@@ -6,7 +6,8 @@
       "Shared\\": "app/Shared/",
       "Domain\\": "app/Domain/",
       "UseCase\\": "app/UseCase/",
-      "Controllers\\": "app/Controllers/"
+      "Controllers\\": "app/Controllers/",
+      "Views\\": "app/Views/"
     }
   },
     "authors": [

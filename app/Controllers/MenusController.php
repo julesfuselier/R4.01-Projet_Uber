@@ -6,17 +6,17 @@ use UseCase\Menus\GetMenu;
 use UseCase\Menus\CreateMenu;
 use Views\Menus\MenuView;
 
-require_once __DIR__ . '/../Views/Menus/MenuView.php';
-
 class MenusController
 {
-    public function showMenus() {
+    public function showMenus()
+    {
         $useCase = new GetMenu();
         $menus = $useCase->execute();
         MenuView::renderList($menus);
     }
 
-    public function create() {
+    public function create()
+    {
         if (isset($_POST['nom']) && isset($_POST['createurNom']) && isset($_POST['plats'])) {
 
             $useCase = new CreateMenu();
@@ -31,7 +31,8 @@ class MenusController
         }
     }
 
-    public function showCreateForm() {
+    public function showCreateForm()
+    {
         $dishUseCase = new ListDishes();
         $plats = $dishUseCase->execute();
 
