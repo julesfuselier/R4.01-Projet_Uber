@@ -1,0 +1,17 @@
+-- Utilisateurs (3 rôles : ADMIN, RESTAURANT_OWNER, CUSTOMER)
+INSERT INTO users (firstName, lastName, email, password, role) VALUES ('Alice', 'Martin', 'alice.martin@email.com', 'Admin1234!', 'ADMIN');
+INSERT INTO users (firstName, lastName, email, password, role) VALUES ('Bruno', 'Lefevre', 'bruno.lefevre@email.com', 'Bruno5678!', 'RESTAURANT_OWNER');
+INSERT INTO users (firstName, lastName, email, password, role) VALUES ('Claire', 'Dupont', 'claire.dupont@email.com', 'Claire9012!', 'RESTAURANT_OWNER');
+INSERT INTO users (firstName, lastName, email, password, role) VALUES ('David', 'Moreau', 'david.moreau@email.com', 'David3456!', 'CUSTOMER');
+INSERT INTO users (firstName, lastName, email, password, role) VALUES ('Emilie', 'Bernard', 'emilie.bernard@email.com', 'Emilie7890!', 'CUSTOMER');
+INSERT INTO users (firstName, lastName, email, password, role) VALUES ('Francois', 'Petit', 'francois.petit@email.com', 'Francois2345!', 'CUSTOMER');
+
+-- Plats (owner_id 1=Alice, 2=Bruno, 3=Claire)
+INSERT INTO dishes (name, description, price, is_available, owner_id) VALUES ('Steak frites', 'Entrecote grillee 200g avec frites maison et sauce bearnaise', 18.50, TRUE, 2);
+INSERT INTO dishes (name, description, price, is_available, owner_id) VALUES ('Croque-monsieur', 'Pain de mie, jambon blanc, emmental fondu, bechamel', 9.90, TRUE, 2);
+INSERT INTO dishes (name, description, price, is_available, owner_id) VALUES ('Soupe a l''oignon', 'Soupe gratinee a l''oignon avec croutons et gruyere', 8.50, TRUE, 2);
+INSERT INTO dishes (name, description, price, is_available, owner_id) VALUES ('Tarte Tatin', 'Tarte aux pommes caramelisees, servie tiede avec creme fraiche', 7.00, FALSE, 2);
+INSERT INTO dishes (name, description, price, is_available, owner_id) VALUES ('Pad Thai', 'Nouilles sautees au poulet, cacahuetes, oeuf, sauce tamarin', 13.90, TRUE, 3);
+INSERT INTO dishes (name, description, price, is_available, owner_id) VALUES ('Rouleaux de printemps', 'Rouleaux frais aux crevettes, vermicelles et menthe (x3)', 7.50, TRUE, 3);
+INSERT INTO dishes (name, description, price, is_available, owner_id) VALUES ('Riz cantonais', 'Riz saute aux legumes, oeufs et jambon', 10.50, TRUE, 3);
+INSERT INTO dishes (name, description, price, is_available, owner_id) VALUES ('Soupe pho', 'Bouillon de boeuf, nouilles de riz, herbes fraiches', 12.00, TRUE, 3);
