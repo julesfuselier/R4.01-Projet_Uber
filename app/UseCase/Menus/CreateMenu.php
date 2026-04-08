@@ -1,8 +1,7 @@
 <?php
 namespace UseCase\Menus;
 
-use Repository\DishRepositoryInterface;
-use Repository\MenuRepositoryInterface;
+use UseCase\Dishes\DishRepositoryInterface;
 
 class CreateMenu
 {

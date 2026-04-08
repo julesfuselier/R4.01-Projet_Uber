@@ -1,5 +1,5 @@
 <?php
-namespace Repository;
+namespace UseCase\Orders;
 
 interface OrderRepositoryInterface
 {

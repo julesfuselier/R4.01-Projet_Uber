@@ -1,8 +1,7 @@
 <?php
 namespace UseCase\Orders;
 
-use Repository\MenuRepositoryInterface;
-use Repository\OrderRepositoryInterface;
+use UseCase\Menus\MenuRepositoryInterface;
 
 class CreateOrder
 {

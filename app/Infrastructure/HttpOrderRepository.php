@@ -3,7 +3,7 @@ namespace Infrastructure;
 
 use Config\ApiConfig;
 use Domain\Order;
-use Repository\OrderRepositoryInterface;
+use UseCase\Orders\OrderRepositoryInterface;
 
 class HttpOrderRepository implements OrderRepositoryInterface
 {

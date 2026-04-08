@@ -3,7 +3,7 @@ namespace Infrastructure;
 
 use Config\ApiConfig;
 use Domain\Dish;
-use Repository\DishRepositoryInterface;
+use UseCase\Dishes\DishRepositoryInterface;
 
 class HttpDishRepository implements DishRepositoryInterface
 {

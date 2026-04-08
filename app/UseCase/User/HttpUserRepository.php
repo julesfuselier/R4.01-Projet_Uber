@@ -1,5 +1,5 @@
 <?php
-namespace Infrastructure;
+namespace UseCase\User;
 
 use Config\ApiConfig;
 use Domain\User;

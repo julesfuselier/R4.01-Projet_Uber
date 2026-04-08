@@ -3,7 +3,7 @@ namespace Infrastructure;
 
 use Config\ApiConfig;
 use Domain\Menu;
-use Repository\MenuRepositoryInterface;
+use UseCase\Menus\MenuRepositoryInterface;
 
 class HttpMenuRepository implements MenuRepositoryInterface
 {

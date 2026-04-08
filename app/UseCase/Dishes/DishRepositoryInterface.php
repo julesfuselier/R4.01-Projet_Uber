@@ -1,5 +1,5 @@
 <?php
-namespace Repository;
+namespace UseCase\Dishes;
 
 interface DishRepositoryInterface
 {
