@@ -2,69 +2,116 @@ package fr.univamu.iut.menu;
 
 import fr.univamu.iut.menu.metier.PlatResume;
 import jakarta.json.Json;
-import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+import jakarta.json.JsonValue;
 
-import java.io.InputStream;
+import java.io.StringReader;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 
 public class PlatsUtilisateursClient {
 
-    private JsonArray plats;
-    private JsonArray utilisateurs;
+    private final HttpClient httpClient;
+
+    private final String baseUrl = "http://localhost:3000";
 
     public PlatsUtilisateursClient() {
-        InputStream inputStream = getClass()
-                .getClassLoader()
-                .getResourceAsStream("plats-utilisateurs.json");
-
-        if (inputStream == null) {
-            throw new RuntimeException(
-                    "Fichier plats-utilisateurs.json introuvable dans le classpath !"
-            );
-        }
-
-        JsonObject data = Json.createReader(inputStream).readObject();
-        this.plats = data.getJsonArray("plats");
-        this.utilisateurs = data.getJsonArray("utilisateurs");
+        this.httpClient = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(5))
+                .build();
     }
 
-    /** return user by id **/
     public String getUserNameById(int id) {
-        for (JsonObject user : utilisateurs.getValuesAs(JsonObject.class)) {
-            if (user.getInt("id") == id) {
-                return user.getString("nom");
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/utilisateurs/" + id))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                try (JsonReader jsonReader = Json.createReader(new StringReader(response.body()))) {
+                    JsonObject userObject = jsonReader.readObject();
+                    return userObject.getString("nom");
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération de l'utilisateur " + id + " : " + e.getMessage());
         }
+
         return null;
     }
 
-    /** return resum plat by id **/
     public PlatResume getPlatById(int id) {
-        for (JsonObject plat : plats.getValuesAs(JsonObject.class)) {
-            if (plat.getInt("id") == id) {
-                return new PlatResume(plat.getInt("id"), plat.getString("nom"), plat.getJsonNumber("prix").doubleValue());
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/plats/" + id))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                try (JsonReader jsonReader = Json.createReader(new StringReader(response.body()))) {
+                    JsonObject platObject = jsonReader.readObject();
+                    int platID;
+                    if (platObject.get("id").getValueType() == JsonValue.ValueType.NUMBER) {
+                        platID = platObject.getInt("id");
+                    } else {
+                        platID = Integer.parseInt(platObject.getString("id"));
+                    }
+
+                    double platPrice;
+                    if (platObject.get("prix").getValueType() == jakarta.json.JsonValue.ValueType.NUMBER) {
+                        platPrice = platObject.getJsonNumber("prix").doubleValue();
+                    } else {
+                        platPrice = Double.parseDouble(platObject.getString("prix"));
+                    }
+
+                    return new PlatResume(
+                            platID,
+                            platObject.getString("nom"),
+                            platPrice
+                    );
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération du plat " + id + " : " + e.getMessage());
         }
+
         return null;
     }
 
-    /** verify if user exists **/
     public boolean userExistsById(int id) {
-        for (JsonObject user : utilisateurs.getValuesAs(JsonObject.class)) {
-            if (user.getInt("id") == id) {
-                return true;
-            }
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/utilisateurs/" + id))
+                    .method("HEAD", HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
+            return response.statusCode() == 200;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
-    /** verify if dish exists **/
     public boolean platExistsById(int id) {
-        for (JsonObject plat : plats.getValuesAs(JsonObject.class)) {
-            if (plat.getInt("id") == id) {
-                return true;
-            }
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/plats/" + id))
+                    .method("HEAD", HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
+            return response.statusCode() == 200;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 }
