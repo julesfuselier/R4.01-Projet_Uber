@@ -2,60 +2,77 @@ package fr.univamu.fr.commande.repository;
 
 import fr.univamu.fr.commande.model.Commande;
 import jakarta.enterprise.context.ApplicationScoped;
-
-import java.util.ArrayList;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @ApplicationScoped
 public class CommandeRepository {
-
-    // Notre fausse base de données en mémoire (Thread-safe)
-    private Map<Integer, Commande> commandesDB = new ConcurrentHashMap<>();
-
-    // Un compteur pour générer automatiquement les ID des commandes (1, 2, 3...)
-    private AtomicInteger idCounter = new AtomicInteger(1);
-
-
-     // Récupère toutes les commandes enregistrées
+    static {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("Driver MySQL chargé avec succès !");
+        } catch (ClassNotFoundException e) {
+            System.err.println("ERREUR : Impossible de trouver le driver MySQL.");
+            e.printStackTrace();
+        }
+    }
+    // On crée l'usine de connexion liée au persistence.xml
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("commande-pu");
 
     public List<Commande> getAllCommandes() {
-        return new ArrayList<>(commandesDB.values());
+        EntityManager em = emf.createEntityManager();
+        List<Commande> list = em.createQuery("SELECT c FROM Commande c", Commande.class).getResultList();
+        em.close();
+        return list;
     }
-
-    //Récupère une commande spécifique par son ID
 
     public Commande getCommandeById(int id) {
-        return commandesDB.get(id);
+        EntityManager em = emf.createEntityManager();
+        Commande c = em.find(Commande.class, id);
+        em.close();
+        return c;
     }
 
-    /**
-     * Sauvegarde une nouvelle commande et lui attribue un ID
-     */
     public Commande addCommande(Commande commande) {
-        int id = idCounter.getAndIncrement();
-        commande.setId(id);
-        commandesDB.put(id, commande);
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin(); // Début de la transaction
+        em.persist(commande);        // Sauvegarde
+        em.getTransaction().commit(); // Validation
+        em.close();
         return commande;
     }
 
-    // Met à jour une commande existante
-
-    public boolean updateCommande(int id, Commande commande) {
-        if (commandesDB.containsKey(id)) {
-            // On s'assure que l'ID ne change pas
-            commande.setId(id);
-            commandesDB.put(id, commande);
+    public boolean updateCommande(int id, Commande updatedCommande) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Commande existing = em.find(Commande.class, id);
+        if (existing != null) {
+            existing.setAdresseLivraison(updatedCommande.getAdresseLivraison());
+            existing.setDateLivraison(updatedCommande.getDateLivraison());
+            em.merge(existing);
+            em.getTransaction().commit();
+            em.close();
             return true;
         }
-        return false; // La commande n'existait pas
+        em.getTransaction().rollback();
+        em.close();
+        return false;
     }
 
-    //Supprime une commande
-
     public boolean deleteCommande(int id) {
-        return commandesDB.remove(id) != null;
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Commande commande = em.find(Commande.class, id);
+        if (commande != null) {
+            em.remove(commande);
+            em.getTransaction().commit();
+            em.close();
+            return true;
+        }
+        em.getTransaction().rollback();
+        em.close();
+        return false;
     }
 }
