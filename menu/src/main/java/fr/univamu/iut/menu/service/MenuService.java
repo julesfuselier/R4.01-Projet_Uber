@@ -73,4 +73,16 @@ public class MenuService {
         return this.menuRepo.createMenu(newMenu);
     }
 
+    public Menu updateMenu(int menuId, String newName) {
+        if (newName == null || newName.trim().isEmpty())
+            throw new IllegalArgumentException("Le nouveau nom est requis");
+
+        boolean isUpdated = this.menuRepo.updateMenuName(menuId, newName);
+
+        if (!isUpdated)
+            return null;
+
+        return this.menuRepo.getMenu(menuId);
+    }
+
 }

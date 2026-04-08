@@ -137,6 +137,23 @@ public class MenuRepositoryMariadb implements MenuRepositoryInterface {
         return null;
     }
 
+    @Override
+    public boolean updateMenuName(int id, String newName) {
+        String query = "UPDATE menu SET nom=?, date_mise_a_jour=? WHERE id=?";
+
+        try (PreparedStatement ps = dbConnection.prepareStatement(query)) {
+            ps.setString(1, newName);
+            ps.setDate(2, Date.valueOf(LocalDate.now()));
+            ps.setInt(3, id);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected == 1;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
     private ArrayList<PlatResume> getPlatsForMenu(int menuId) {
         ArrayList<PlatResume> plats = new ArrayList<>();
 

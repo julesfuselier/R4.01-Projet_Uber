@@ -92,4 +92,35 @@ public class MenuResource {
         }
     }
 
+    @PUT
+    @Path("{id}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response updateMenu(@PathParam("id") int id, MenuInput input) {
+        try {
+            if (input == null || input.name == null)
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Les données envoyées sont invalides (nom manquant)")
+                        .build();
+
+            Menu updatedMenu = this.menuService.updateMenu(id, input.name);
+
+            if (updatedMenu == null)
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Menu introuvable")
+                        .build();
+
+            String result = null;
+            try (Jsonb jsonb = JsonbBuilder.create()) {
+                result = jsonb.toJson(updatedMenu);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+
+            return Response.ok(result).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
+
 }

@@ -24,8 +24,16 @@ public interface MenuRepositoryInterface {
     public ArrayList<Menu> getAllMenu();
 
     /**
-     * Method that return true if menu created, else false
+     * Method that return the created Menu
      * @return Menu
      */
     public Menu createMenu(Menu menu);
+
+    /**
+     * Method that update the current name and update the update date
+     * @param id menu id
+     * @param newName menu's new name
+     * @return true if menu find, else false
+     */
+    public boolean updateMenuName(int id, String newName);
 }
