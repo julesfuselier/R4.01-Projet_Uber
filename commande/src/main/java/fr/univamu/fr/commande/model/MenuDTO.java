@@ -3,7 +3,7 @@ package fr.univamu.fr.commande.model;
 public class MenuDTO {
     private int id;
     private String nom;
-    private double prix;
+    private double prixTotal;
 
     public int getId() {
         return id;
@@ -21,12 +21,12 @@ public class MenuDTO {
         this.nom = nom;
     }
 
-    public double getPrix() {
-        return prix;
+
+    public double getPrixTotal() {
+        return prixTotal;
     }
 
-
-    public void setPrix(double prix) {
-        this.prix = prix;
+    public void setPrixTotal(double prixTotal) {
+        this.prixTotal = prixTotal;
     }
 }

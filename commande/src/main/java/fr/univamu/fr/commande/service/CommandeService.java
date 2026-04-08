@@ -45,10 +45,10 @@ public class CommandeService {
 
             // On fait une "photographie" du nom et du prix du menu au moment de la commande
             ligne.setMenuNom(menu.getNom());
-            ligne.setPrixUnitaire(menu.getPrix());
+            ligne.setPrixUnitaire(menu.getPrixTotal());
 
             // Calcul du prix de cette ligne (prix unitaire x quantité)
-            double prixLigne = menu.getPrix() * ligne.getQuantite();
+            double prixLigne = menu.getPrixTotal() * ligne.getQuantite();
             ligne.setPrixLigne(prixLigne);
 
             // On ajoute ce montant au total global de la commande
