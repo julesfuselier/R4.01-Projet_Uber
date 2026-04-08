@@ -1,11 +1,16 @@
 package fr.univamu.iut.menu.resource;
 
+import fr.univamu.iut.menu.MenuInput;
 import fr.univamu.iut.menu.data.MenuRepositoryInterface;
+import fr.univamu.iut.menu.metier.Menu;
 import fr.univamu.iut.menu.service.MenuService;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
+
+import java.net.ResponseCache;
 
 @Path("/menus")
 @ApplicationScoped
@@ -54,6 +59,20 @@ public class MenuResource {
             throw new NotFoundException();
 
         return result;
+    }
+
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response createMenu(MenuInput input) {
+        String result = this.menuService.createMenuJSON(input.nom, input.createurId);
+
+        if (result == null)
+            throw new BadRequestException();
+
+        return Response.status(Response.Status.CREATED)
+                .entity(result)
+                .build();
     }
 
 }

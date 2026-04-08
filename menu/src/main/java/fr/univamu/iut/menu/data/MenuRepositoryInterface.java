@@ -22,4 +22,10 @@ public interface MenuRepositoryInterface {
      * @return list of Menu
      */
     public ArrayList<Menu> getAllMenu();
+
+    /**
+     * Method that return true if menu created, else false
+     * @return boolean
+     */
+    public boolean createMenu(Menu menu);
 }

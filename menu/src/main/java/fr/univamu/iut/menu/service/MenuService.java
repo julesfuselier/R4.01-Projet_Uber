@@ -52,4 +52,22 @@ public class MenuService {
 
         return result;
     }
+
+    public String createMenuJSON(String name, int idCreator) {
+        Menu newMenu = new Menu(name, idCreator);
+
+        boolean created = this.menuRepo.createMenu(newMenu);
+
+        if (!created) return null;
+
+        String result = null;
+        try (Jsonb jsonb = JsonbBuilder.create()) {
+            result = jsonb.toJson(newMenu);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return result;
+    }
+
 }
