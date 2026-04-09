@@ -17,7 +17,7 @@ public class PlatsUtilisateursClient {
 
     private final HttpClient httpClient;
 
-    private final String baseUrl = "http://localhost:3000";
+    private final String baseUrl = "http://localhost:8080/uber/api/";
 
     public PlatsUtilisateursClient() {
         this.httpClient = HttpClient.newBuilder()
@@ -28,7 +28,7 @@ public class PlatsUtilisateursClient {
     public String getUserNameById(int id) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(baseUrl + "/utilisateurs/" + id))
+                    .uri(URI.create(baseUrl + "/users/" + id))
                     .GET()
                     .build();
 
@@ -50,7 +50,7 @@ public class PlatsUtilisateursClient {
     public PlatResume getPlatById(int id) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(baseUrl + "/plats/" + id))
+                    .uri(URI.create(baseUrl + "/dishes/" + id))
                     .GET()
                     .build();
 
