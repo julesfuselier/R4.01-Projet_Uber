@@ -13,13 +13,8 @@ import jakarta.ws.rs.core.Application;
 @ApplicationScoped
 public class MenuApplication extends Application {
 
-//    Dotenv dotenv = Dotenv.load();
-
     @Produces
     private MenuRepositoryInterface openDbConnection() {
-//        String dbUrl = dotenv.get("DB_URL");
-//        String dbUser = dotenv.get("DB_USER");
-//        String dbPass = dotenv.get("DB_PASS");
 
         try {
             return new MenuRepositoryMariadb("jdbc:mariadb://mysql-blog-td.alwaysdata.net/blog-td_menu-api", "blog-td", "Rb.velocity+6");

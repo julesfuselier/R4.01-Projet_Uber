@@ -1,4 +1,4 @@
-package fr.univamu.iut.menu;
+package fr.univamu.iut.menu.api_externe;
 
 import fr.univamu.iut.menu.metier.PlatResume;
 import jakarta.json.Json;
@@ -13,7 +13,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 
-public class PlatsUtilisateursClient {
+public class PlatsUtilisateursClient implements PlatsUtilisateursClientInterface {
 
     private final HttpClient httpClient;
 
@@ -90,33 +90,10 @@ public class PlatsUtilisateursClient {
     }
 
     public boolean userExistsById(int id) {
-//        try {
-//            HttpRequest request = HttpRequest.newBuilder()
-//                    .uri(URI.create(baseUrl + "/utilisateurs/" + id))
-//                    .method("HEAD", HttpRequest.BodyPublishers.noBody())
-//                    .build();
-//
-//            HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
-//            return response.statusCode() == 200;
-//        } catch (Exception e) {
-//            return false;
-//        }
         return (this.getUserNameById(id) != null);
     }
 
     public boolean platExistsById(int id) {
-//        try {
-//            HttpRequest request = HttpRequest.newBuilder()
-//                    .uri(URI.create(baseUrl + "/plats/" + id))
-//                    .method("HEAD", HttpRequest.BodyPublishers.noBody())
-//                    .build();
-//
-//            HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
-//            return response.statusCode() == 200;
-//        } catch (Exception e) {
-//            return false;
-//        }
-
         return (this.getPlatById(id) != null);
     }
 }

@@ -1,6 +1,6 @@
 package fr.univamu.iut.menu.service;
 
-import fr.univamu.iut.menu.PlatsUtilisateursClient;
+import fr.univamu.iut.menu.api_externe.PlatsUtilisateursClient;
 import fr.univamu.iut.menu.data.MenuRepositoryInterface;
 import fr.univamu.iut.menu.metier.Menu;
 import jakarta.json.bind.Jsonb;
@@ -8,7 +8,7 @@ import jakarta.json.bind.JsonbBuilder;
 
 import java.util.ArrayList;
 
-public class MenuService {
+public class MenuService implements MenuServiceInterface{
 
     protected MenuRepositoryInterface menuRepo;
 
@@ -24,6 +24,7 @@ public class MenuService {
      * @param menuId
      * @return a string on JSON format
      */
+    @Override
     public String getMenuJSON(int menuId) {
         String result = null;
         Menu myMenu = menuRepo.getMenu(menuId);
@@ -43,6 +44,7 @@ public class MenuService {
      * Method returning all menus
      * @return a string on JSON format
      */
+    @Override
     public String getAllMenuJSON() {
         ArrayList<Menu> allMenu = menuRepo.getAllMenu();
 
@@ -57,6 +59,7 @@ public class MenuService {
         return result;
     }
 
+    @Override
     public Menu createMenu(String name, int idCreator) {
 
         if (name == null || name.trim().isEmpty() || idCreator <= 0) {
@@ -73,6 +76,7 @@ public class MenuService {
         return this.menuRepo.createMenu(newMenu);
     }
 
+    @Override
     public Menu updateMenu(int menuId, String newName) {
         if (newName == null || newName.trim().isEmpty())
             throw new IllegalArgumentException("Le nouveau nom est requis");
@@ -85,10 +89,12 @@ public class MenuService {
         return this.menuRepo.getMenu(menuId);
     }
 
+    @Override
     public boolean deleteMenu(int menuId) {
         return this.menuRepo.deleteMenu(menuId);
     }
 
+    @Override
     public Menu addPlatToMenu(int menuId, int platId) {
         Menu menu = this.menuRepo.getMenu(menuId);
         if (menu == null)
@@ -108,6 +114,7 @@ public class MenuService {
         return null;
     }
 
+    @Override
     public Menu removePlatFromMenu(int menuId, int platId) {
         Menu menu = this.menuRepo.getMenu(menuId);
         if (menu == null)

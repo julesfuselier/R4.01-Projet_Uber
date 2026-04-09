@@ -1,4 +1,4 @@
-package fr.univamu.iut.menu.resource;
+package fr.univamu.iut.menu.api_rest;
 
 import fr.univamu.iut.menu.MenuInput;
 import fr.univamu.iut.menu.data.MenuRepositoryInterface;
@@ -12,7 +12,6 @@ import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
-import java.net.ResponseCache;
 import java.net.URI;
 
 @Path("/menus")

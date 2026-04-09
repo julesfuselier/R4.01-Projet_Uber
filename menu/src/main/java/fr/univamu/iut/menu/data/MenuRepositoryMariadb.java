@@ -1,10 +1,10 @@
 package fr.univamu.iut.menu.data;
 
+import fr.univamu.iut.menu.api_externe.PlatsUtilisateursClientInterface;
 import fr.univamu.iut.menu.metier.PlatResume;
-import fr.univamu.iut.menu.PlatsUtilisateursClient;
+import fr.univamu.iut.menu.api_externe.PlatsUtilisateursClient;
 import fr.univamu.iut.menu.metier.Menu;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class MenuRepositoryMariadb implements MenuRepositoryInterface {
 
     protected Connection dbConnection;
-    private PlatsUtilisateursClient client;
+    private PlatsUtilisateursClientInterface client;
 
     public MenuRepositoryMariadb(String infoConnection, String user, String pwd) throws java.sql.SQLException, java.lang.ClassNotFoundException {
         Class.forName("org.mariadb.jdbc.Driver");
