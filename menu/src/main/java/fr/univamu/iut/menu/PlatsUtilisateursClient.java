@@ -17,7 +17,7 @@ public class PlatsUtilisateursClient {
 
     private final HttpClient httpClient;
 
-    private final String baseUrl = "http://localhost:8080/uber-1.0-SNAPSHOT/api/";
+    private final String baseUrl = "http://localhost:8080/uber/api/";
 
     public PlatsUtilisateursClient() {
         this.httpClient = HttpClient.newBuilder()
