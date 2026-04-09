@@ -5,7 +5,7 @@ namespace UseCase\Orders;
 /**
  * DTO représentant une ligne de commande dans la requête de création.
  */
-class OrderLineData
+readonly class OrderLineData
 {
     /**
      * @param int    $menuId    Identifiant du menu.
@@ -14,9 +14,9 @@ class OrderLineData
      * @param int    $quantity  Quantité commandée.
      */
     public function __construct(
-        public readonly int    $menuId,
-        public readonly string $menuName,
-        public readonly float  $unitPrice,
-        public readonly int    $quantity
+        public int    $menuId,
+        public string $menuName,
+        public float  $unitPrice,
+        public int    $quantity
     ) {}
 }

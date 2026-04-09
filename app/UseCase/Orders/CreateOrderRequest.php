@@ -5,7 +5,7 @@ namespace UseCase\Orders;
 /**
  * DTO portant les données nécessaires à la création d'une commande.
  */
-class CreateOrderRequest
+readonly class CreateOrderRequest
 {
     /**
      * @param string          $shippingAddress Adresse de livraison.
@@ -13,8 +13,8 @@ class CreateOrderRequest
      * @param OrderLineData[] $lines           Lignes de la commande.
      */
     public function __construct(
-        public readonly string $shippingAddress,
-        public readonly string $deliveryDate,
-        public readonly array  $lines
+        public string $shippingAddress,
+        public string $deliveryDate,
+        public array  $lines
     ) {}
 }
