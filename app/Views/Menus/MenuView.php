@@ -1,9 +1,19 @@
 <?php
 
 namespace Views\Menus;
+
+/**
+ * Vue HTML pour l'affichage et la gestion des menus.
+ */
 class MenuView
 {
-    public static function renderList($menus) {
+    /**
+     * Affiche la liste des menus sous forme de cartes.
+     *
+     * @param \Domain\Menu[] $menus
+     */
+    public static function renderList($menus): void
+    {
         $header = file_get_contents(__DIR__ . '/../Shared/Header/header-template.html');
         $cardTemplate = file_get_contents(__DIR__ . '/menu-card.html');
 
@@ -23,7 +33,14 @@ class MenuView
         echo "</div></body></html>";
     }
 
-    public static function renderEditForm($menu, $platsDisponibles) {
+    /**
+     * Affiche le formulaire d'édition d'un menu existant.
+     *
+     * @param \Domain\Menu   $menu
+     * @param \Domain\Dish[] $platsDisponibles
+     */
+    public static function renderEditForm($menu, $platsDisponibles): void
+    {
         $header = file_get_contents(__DIR__ . '/../Shared/Header/header-template.html');
         $formTemplate = file_get_contents(__DIR__ . '/edit-menu.html');
 
@@ -40,17 +57,23 @@ class MenuView
             ";
         }
 
-        $finalHtml = str_replace('{ID}',       htmlspecialchars($menu->id),        $formTemplate);
-        $finalHtml = str_replace('{NOM}',      htmlspecialchars($menu->name),      $finalHtml);
-        $finalHtml = str_replace('{CREATEUR}', htmlspecialchars($menu->createdBy), $finalHtml);
-        $finalHtml = str_replace('{LISTE_PLATS}', $checkboxesHtml,                 $finalHtml);
+        $finalHtml = str_replace('{ID}',          htmlspecialchars($menu->id),   $formTemplate);
+        $finalHtml = str_replace('{NOM}',         htmlspecialchars($menu->name), $finalHtml);
+        $finalHtml = str_replace('{LISTE_PLATS}', $checkboxesHtml,               $finalHtml);
 
         echo $header;
         echo $finalHtml;
         echo "</body></html>";
     }
 
-    public static function renderCreateForm($platsDisponibles) {
+    /**
+     * Affiche le formulaire de création d'un nouveau menu.
+     *
+     * @param \Domain\User[] $users
+     * @param \Domain\Dish[] $platsDisponibles
+     */
+    public static function renderCreateForm($users, $platsDisponibles): void
+    {
         $header = file_get_contents(__DIR__ . '/../Shared/Header/header-template.html');
         $formTemplate = file_get_contents(__DIR__ . '/create-menu.html');
 
@@ -59,14 +82,24 @@ class MenuView
             $checkboxesHtml .= "
                 <div style='margin-bottom: 5px;'>
                     <label>
-                        <input type='checkbox' name='plats[]' value='" . htmlspecialchars($plat->id) . "'> 
+                        <input type='checkbox' name='plats[]' value='" . htmlspecialchars($plat->id) . "'>
                         " . htmlspecialchars($plat->name) . " (" . htmlspecialchars($plat->price) . " €)
                     </label>
                 </div>
             ";
         }
 
-        $finalHtml = str_replace('{LISTE_PLATS}', $checkboxesHtml, $formTemplate);
+        $createurSelect = "<select id='creatorId' name='creatorId' required style='width: 100%; padding: 8px;'>";
+        $createurSelect .= "<option value=''>-- Choisissez un créateur --</option>";
+        foreach ($users as $user) {
+            $createurSelect .= "<option value='" . htmlspecialchars($user->id) . "'>"
+                . htmlspecialchars($user->firstName . ' ' . $user->lastName)
+                . "</option>";
+        }
+        $createurSelect .= "</select>";
+
+        $finalHtml = str_replace('{LISTE_PLATS}',     $checkboxesHtml,  $formTemplate);
+        $finalHtml = str_replace('{LISTE_CREATEURS}', $createurSelect,  $finalHtml);
 
         echo $header;
         echo $finalHtml;

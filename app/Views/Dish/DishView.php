@@ -1,9 +1,19 @@
 <?php
 
 namespace Views\Dish;
+
+/**
+ * Vue HTML pour l'affichage des plats.
+ */
 class DishView
 {
-    public static function render($plats) {
+    /**
+     * Affiche la liste des plats sous forme de cartes.
+     *
+     * @param \Domain\Dish[] $plats
+     */
+    public static function render($plats): void
+    {
         $header = file_get_contents(__DIR__ . '/../Shared/Header/header-template.html');
 
         $cardTemplate = file_get_contents(__DIR__ . '/dish-card.html');

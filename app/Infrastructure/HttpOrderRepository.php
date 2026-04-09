@@ -1,12 +1,19 @@
 <?php
+
 namespace Infrastructure;
 
 use Config\ApiConfig;
 use Domain\Order;
 use UseCase\Orders\OrderRepositoryInterface;
 
+/**
+ * Implémentation HTTP du repository des commandes (JSON server :3005).
+ */
 class HttpOrderRepository implements OrderRepositoryInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public function findAll(): array
     {
         $json = file_get_contents(ApiConfig::ORDERS_API_BASE . '/commandes');
@@ -29,6 +36,7 @@ class HttpOrderRepository implements OrderRepositoryInterface
         return $orders;
     }
 
+    /** {@inheritDoc} */
     public function save(\Domain\Order $order): bool
     {
         $lignes = array_map(fn($l) => [

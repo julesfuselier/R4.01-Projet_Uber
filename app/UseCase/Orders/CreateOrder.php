@@ -1,15 +1,22 @@
 <?php
+
 namespace UseCase\Orders;
 
 use Domain\Order;
 use Domain\OrderLine;
 
+/**
+ * Cas d'usage : crée et persiste une nouvelle commande.
+ */
 class CreateOrder
 {
     public function __construct(
         private OrderRepositoryInterface $orderRepo
     ) {}
 
+    /**
+     * @return bool False si la requête ne contient aucune ligne.
+     */
     public function execute(CreateOrderRequest $request): bool
     {
         if (empty($request->lines)) {

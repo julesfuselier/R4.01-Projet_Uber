@@ -1,12 +1,19 @@
 <?php
+
 namespace Infrastructure;
 
 use Config\ApiConfig;
 use Domain\Dish;
 use UseCase\Dishes\DishRepositoryInterface;
 
+/**
+ * Implémentation HTTP du repository des plats (Java Uber Service).
+ */
 class HttpDishRepository implements DishRepositoryInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public function findAll(): array
     {
         $json = file_get_contents(ApiConfig::DISHES_API_BASE);

@@ -2,9 +2,18 @@
 
 namespace Views\Orders;
 
+/**
+ * Vue HTML pour l'affichage et la création des commandes.
+ */
 class OrderView
 {
-    public static function renderList($orders) {
+    /**
+     * Affiche l'historique des commandes.
+     *
+     * @param \Domain\Order[] $orders
+     */
+    public static function renderList($orders): void
+    {
         $header = file_get_contents(__DIR__ . '/../Shared/Header/header-template.html');
         $cardTemplate = file_get_contents(__DIR__ . '/order-card.html');
 
@@ -24,7 +33,13 @@ class OrderView
         echo "</div></body></html>";
     }
 
-    public static function renderCreateForm($menusDispos) {
+    /**
+     * Affiche le formulaire de passage de commande.
+     *
+     * @param \Domain\Menu[] $menusDispos
+     */
+    public static function renderCreateForm($menusDispos): void
+    {
         $header = file_get_contents(__DIR__ . '/../Shared/Header/header-template.html');
         $formTemplate = file_get_contents(__DIR__ . '/create-order.html');
 

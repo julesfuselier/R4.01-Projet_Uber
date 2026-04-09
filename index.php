@@ -17,21 +17,25 @@ use UseCase\Menus\GetMenu;
 use UseCase\Menus\UpdateMenu;
 use UseCase\Orders\CreateOrder;
 use UseCase\Orders\GetOrder;
+use Infrastructure\HttpUserRepository;
+use UseCase\User\GetUser;
 
 $dishRepo  = new HttpDishRepository();
 $menuRepo  = new HttpMenuRepository();
 $orderRepo = new HttpOrderRepository();
+$userRepo  = new HttpUserRepository();
 
 $listDishes  = new ListDishes($dishRepo);
 $getMenu     = new GetMenu($menuRepo);
-$createMenu  = new CreateMenu($dishRepo, $menuRepo);
-$updateMenu  = new UpdateMenu($dishRepo, $menuRepo);
+$createMenu  = new CreateMenu($menuRepo);
+$updateMenu  = new UpdateMenu($menuRepo);
 $deleteMenu  = new DeleteMenu($menuRepo);
 $getOrder    = new GetOrder($orderRepo);
 $createOrder = new CreateOrder($orderRepo);
+$getUser     = new GetUser($userRepo);
 
 $dishesController  = new DishesController($listDishes, new DishPresenter());
-$menusController   = new MenusController($getMenu, $createMenu, $updateMenu, $deleteMenu, $listDishes, new MenuPresenter());
+$menusController   = new MenusController($getMenu, $createMenu, $updateMenu, $deleteMenu, $listDishes, $getUser, new MenuPresenter());
 $ordersController  = new OrdersController($getOrder, $createOrder, $getMenu, new OrderPresenter());
 
 $router = new \Bramus\Router\Router();

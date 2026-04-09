@@ -1,4 +1,5 @@
 <?php
+
 namespace Controllers;
 
 use Presenters\OrderPresenter;
@@ -8,6 +9,9 @@ use UseCase\Orders\CreateOrderRequest;
 use UseCase\Orders\GetOrder;
 use UseCase\Orders\OrderLineData;
 
+/**
+ * Gère les requêtes HTTP liées aux commandes.
+ */
 class OrdersController
 {
     public function __construct(
@@ -17,18 +21,21 @@ class OrdersController
         private OrderPresenter $presenter
     ) {}
 
+    /** Affiche l'historique des commandes. */
     public function showOrders(): void
     {
         $orders = $this->getOrder->execute();
         $this->presenter->showList($orders);
     }
 
+    /** Affiche le formulaire de création d'une commande. */
     public function showCreateForm(): void
     {
         $menus = $this->getMenu->execute();
         $this->presenter->showCreateForm($menus);
     }
 
+    /** Traite la soumission du formulaire de commande et redirige vers /commandes. */
     public function create(): void
     {
         if (!isset($_POST['adresseLivraison'], $_POST['dateLivraison'], $_POST['quantites'])) {
