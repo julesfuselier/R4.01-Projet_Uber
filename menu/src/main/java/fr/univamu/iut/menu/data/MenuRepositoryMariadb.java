@@ -4,6 +4,7 @@ import fr.univamu.iut.menu.metier.PlatResume;
 import fr.univamu.iut.menu.PlatsUtilisateursClient;
 import fr.univamu.iut.menu.metier.Menu;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -173,6 +174,46 @@ public class MenuRepositoryMariadb implements MenuRepositoryInterface {
             }
         } catch (SQLException e) {
             System.err.println("Erreur lors de la suppression du menu " + id + " : " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isPlatInMenu(int menuId, int platId) {
+        String query = "SELECT 1 FROM menu WHERE menu_id=? AND plat_id=?";
+        try (PreparedStatement ps = dbConnection.prepareStatement(query)) {
+            ps.setInt(1, menuId);
+            ps.setInt(2, platId);
+            try (ResultSet result = ps.executeQuery()) {
+                return result.next();
+            }
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean addPlatToMenu(int menuId, int platId) {
+        String insertLiaison = "INSERT INTO menu_plat (menu_id, plat_id) VALUES (?, ?)";
+        String updateDateMenu = "UPDATE menu SET date_mise_a_jou=? WHERE id=?";
+
+        try {
+            try (PreparedStatement psInsert = dbConnection.prepareStatement(insertLiaison)) {
+                psInsert.setInt(1, menuId);
+                psInsert.setInt(2, platId);
+                psInsert.executeUpdate();
+            }
+
+            try (PreparedStatement psUpdate = dbConnection.prepareStatement(updateDateMenu)) {
+                psUpdate.setDate(1, Date.valueOf(LocalDate.now()));
+                psUpdate.setInt(2, menuId);
+                psUpdate.executeUpdate();
+            }
+
+            return true;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
             return false;
         }
     }

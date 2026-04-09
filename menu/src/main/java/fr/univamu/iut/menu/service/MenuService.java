@@ -89,4 +89,23 @@ public class MenuService {
         return this.menuRepo.deleteMenu(menuId);
     }
 
+    public Menu addPlatToMenu(int menuId, int platId) {
+        Menu menu = this.menuRepo.getMenu(menuId);
+        if (menu == null)
+            throw new IllegalArgumentException("Menu introuvable");
+
+        if (!this.client.platExistsById(platId))
+            throw new IllegalArgumentException("Plat introuvable dans l'API");
+
+        if (this.menuRepo.isPlatInMenu(menuId, platId))
+            throw new IllegalStateException("Le plat est déjà présent dans ce menu");
+
+        boolean success = this.menuRepo.addPlatToMenu(menuId, platId);
+
+        if (success)
+            return this.menuRepo.getMenu(menuId);
+
+        return null;
+    }
+
 }

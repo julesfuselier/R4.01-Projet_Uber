@@ -88,30 +88,33 @@ public class PlatsUtilisateursClient {
     }
 
     public boolean userExistsById(int id) {
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(baseUrl + "/utilisateurs/" + id))
-                    .method("HEAD", HttpRequest.BodyPublishers.noBody())
-                    .build();
-
-            HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
-            return response.statusCode() == 200;
-        } catch (Exception e) {
-            return false;
-        }
+//        try {
+//            HttpRequest request = HttpRequest.newBuilder()
+//                    .uri(URI.create(baseUrl + "/utilisateurs/" + id))
+//                    .method("HEAD", HttpRequest.BodyPublishers.noBody())
+//                    .build();
+//
+//            HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
+//            return response.statusCode() == 200;
+//        } catch (Exception e) {
+//            return false;
+//        }
+        return (this.getUserNameById(id) != null);
     }
 
     public boolean platExistsById(int id) {
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(baseUrl + "/plats/" + id))
-                    .method("HEAD", HttpRequest.BodyPublishers.noBody())
-                    .build();
+//        try {
+//            HttpRequest request = HttpRequest.newBuilder()
+//                    .uri(URI.create(baseUrl + "/plats/" + id))
+//                    .method("HEAD", HttpRequest.BodyPublishers.noBody())
+//                    .build();
+//
+//            HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
+//            return response.statusCode() == 200;
+//        } catch (Exception e) {
+//            return false;
+//        }
 
-            HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
-            return response.statusCode() == 200;
-        } catch (Exception e) {
-            return false;
-        }
+        return (this.getPlatById(id) != null);
     }
 }

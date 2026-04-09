@@ -136,4 +136,26 @@ public class MenuResource {
         return Response.noContent().build();
     }
 
+    @PUT
+    @Path("{id}/plats/{platId}")
+    @Produces("application/json")
+    public Response addPlatToMenu(@PathParam("id") int menuId, @PathParam("platId") int platId) {
+        try {
+            Menu updatedMenu = this.menuService.addPlatToMenu(menuId, platId);
+
+            String result = null;
+            try (Jsonb jsonb = JsonbBuilder.create()) {
+                result = jsonb.toJson(updatedMenu);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+
+            return Response.ok(result).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        } catch (IllegalStateException e) {
+            return Response.status(Response.Status.CONFLICT).entity(e.getMessage()).build();
+        }
+    }
+
 }

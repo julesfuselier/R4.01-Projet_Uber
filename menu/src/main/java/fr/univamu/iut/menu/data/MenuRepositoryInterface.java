@@ -43,4 +43,20 @@ public interface MenuRepositoryInterface {
      * @return true if delete success, false if the menu doesn't exist
      */
     public boolean deleteMenu(int id);
+
+    /**
+     * Verify is plat in menu
+     * @param menuId menu's id
+     * @param platId id plat
+     * @return true if in menu, false if plat not in menu
+     */
+    public boolean isPlatInMenu(int menuId, int platId);
+
+    /**
+     * Add plat in menu
+     * @param menuId menu's id
+     * @param platId id plat
+     * @return true if plat inserted in menu, false if plat inserted in menu
+     */
+    public boolean addPlatToMenu(int menuId, int platId);
 }
