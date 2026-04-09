@@ -17,7 +17,7 @@ public class PlatsUtilisateursClient {
 
     private final HttpClient httpClient;
 
-    private final String baseUrl = "http://localhost:8080/uber/api/";
+    private final String baseUrl = "http://localhost:8080/uber-1.0-SNAPSHOT/api/";
 
     public PlatsUtilisateursClient() {
         this.httpClient = HttpClient.newBuilder()
@@ -28,7 +28,7 @@ public class PlatsUtilisateursClient {
     public String getUserNameById(int id) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(baseUrl + "/users/" + id))
+                    .uri(URI.create(baseUrl + "users/" + id))
                     .GET()
                     .build();
 
@@ -37,7 +37,9 @@ public class PlatsUtilisateursClient {
             if (response.statusCode() == 200) {
                 try (JsonReader jsonReader = Json.createReader(new StringReader(response.body()))) {
                     JsonObject userObject = jsonReader.readObject();
-                    return userObject.getString("nom");
+                    String firstName = userObject.getString("firstName", "");
+                    String lastName = userObject.getString("lastName", "");
+                    return (firstName + " " + lastName).trim();
                 }
             }
         } catch (Exception e) {
@@ -50,7 +52,7 @@ public class PlatsUtilisateursClient {
     public PlatResume getPlatById(int id) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(baseUrl + "/dishes/" + id))
+                    .uri(URI.create(baseUrl + "dishes/" + id))
                     .GET()
                     .build();
 
@@ -67,15 +69,15 @@ public class PlatsUtilisateursClient {
                     }
 
                     double platPrice;
-                    if (platObject.get("prix").getValueType() == jakarta.json.JsonValue.ValueType.NUMBER) {
-                        platPrice = platObject.getJsonNumber("prix").doubleValue();
+                    if (platObject.get("price").getValueType() == jakarta.json.JsonValue.ValueType.NUMBER) {
+                        platPrice = platObject.getJsonNumber("price").doubleValue();
                     } else {
-                        platPrice = Double.parseDouble(platObject.getString("prix"));
+                        platPrice = Double.parseDouble(platObject.getString("price"));
                     }
 
                     return new PlatResume(
                             platID,
-                            platObject.getString("nom"),
+                            platObject.getString("name"),
                             platPrice
                     );
                 }
