@@ -3,16 +3,23 @@ package fr.univamu.iut.menu.service;
 import fr.univamu.iut.menu.api_externe.PlatsUtilisateursClient;
 import fr.univamu.iut.menu.data.MenuRepositoryInterface;
 import fr.univamu.iut.menu.metier.Menu;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 
 import java.util.ArrayList;
 
+@ApplicationScoped
 public class MenuService implements MenuServiceInterface{
 
+    @Inject
     protected MenuRepositoryInterface menuRepo;
 
+    @Inject
     private PlatsUtilisateursClient client;
+
+    public MenuService() {}
 
     public MenuService(MenuRepositoryInterface menuRepo) {
         this.menuRepo = menuRepo;

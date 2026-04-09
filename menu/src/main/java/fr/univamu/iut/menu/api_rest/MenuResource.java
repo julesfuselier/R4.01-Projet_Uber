@@ -4,6 +4,7 @@ import fr.univamu.iut.menu.MenuInput;
 import fr.univamu.iut.menu.data.MenuRepositoryInterface;
 import fr.univamu.iut.menu.metier.Menu;
 import fr.univamu.iut.menu.service.MenuService;
+import fr.univamu.iut.menu.service.MenuServiceInterface;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -21,14 +22,10 @@ public class MenuResource {
     @Inject
     private MenuRepositoryInterface menuRepo;
 
-    private MenuService menuService;
+    @Inject
+    private MenuServiceInterface menuService;
 
     public MenuResource() {}
-
-    @PostConstruct
-    public void init() {
-        this.menuService = new MenuService(menuRepo);
-    }
 
     /**
      * Constructeur permettant d'initialiser le service avec une interface d'accès aux données
