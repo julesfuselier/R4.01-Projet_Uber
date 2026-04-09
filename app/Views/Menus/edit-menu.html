@@ -1,0 +1,20 @@
+<div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+    <h2>Modifier le Menu</h2>
+
+    <form method="POST" action="/menus/{ID}/edit">
+        <div style="margin-bottom: 15px;">
+            <label for="nom" style="display: block; font-weight: bold;">Nom du Menu :</label>
+            <input type="text" id="nom" name="nom" value="{NOM}" required style="width: 100%; padding: 8px;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 10px;">Ajouter des plats :</label>
+            {LISTE_PLATS}
+        </div>
+
+        <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Enregistrer les modifications
+        </button>
+        <a href="/menus" style="margin-left: 10px;">Annuler</a>
+    </form>
+</div>
