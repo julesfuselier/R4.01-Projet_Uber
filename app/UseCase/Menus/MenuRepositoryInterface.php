@@ -6,5 +6,9 @@ interface MenuRepositoryInterface
     /** @return \Domain\Menu[] */
     public function findAll(): array;
 
-    public function create(string $name, string $createdBy, array $dishes, float $totalPrice): bool;
+    public function create(\Domain\Menu $menu): bool;
+
+    public function update(\Domain\Menu $menu): bool;
+
+    public function delete(int $id): bool;
 }

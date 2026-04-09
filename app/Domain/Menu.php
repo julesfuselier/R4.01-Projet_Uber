@@ -8,4 +8,9 @@ class Menu
     public $createdBy;
     public $totalPrice;
     public $dishes = [];
+
+    public function computeTotalPrice(): float
+    {
+        return (float) array_sum(array_map(fn($d) => $d->price, $this->dishes));
+    }
 }

@@ -4,10 +4,10 @@
     "psr-4": {
       "Config\\": "app/Config/",
       "Domain\\": "app/Domain/",
-      "Repository\\": "app/Repository/",
       "Infrastructure\\": "app/Infrastructure/",
       "UseCase\\": "app/UseCase/",
       "Controllers\\": "app/Controllers/",
+      "Presenters\\": "app/Presenters/",
       "Views\\": "app/Views/"
     }
   },

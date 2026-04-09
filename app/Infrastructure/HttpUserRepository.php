@@ -1,9 +1,9 @@
 <?php
-namespace UseCase\User;
+namespace Infrastructure;
 
 use Config\ApiConfig;
 use Domain\User;
-use Repository\UserRepositoryInterface;
+use UseCase\User\UserRepositoryInterface;
 
 class HttpUserRepository implements UserRepositoryInterface
 {
@@ -15,13 +15,13 @@ class HttpUserRepository implements UserRepositoryInterface
         $users = [];
         if ($data) {
             foreach ($data as $item) {
-                $user = new User();
+                $user            = new User();
                 $user->id        = $item['id'];
                 $user->firstName = $item['firstName'];
                 $user->lastName  = $item['lastName'];
                 $user->email     = $item['email'];
                 $user->role      = $item['role'];
-                $users[] = $user;
+                $users[]         = $user;
             }
         }
         return $users;

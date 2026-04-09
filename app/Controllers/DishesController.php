@@ -1,16 +1,19 @@
 <?php
 namespace Controllers;
 
+use Presenters\DishPresenter;
 use UseCase\Dishes\ListDishes;
-use Views\Dish\DishView;
 
 class DishesController
 {
-    public function __construct(private ListDishes $listDishes) {}
+    public function __construct(
+        private ListDishes     $listDishes,
+        private DishPresenter  $presenter
+    ) {}
 
     public function showDishes(): void
     {
         $dishes = $this->listDishes->execute();
-        DishView::render($dishes);
+        $this->presenter->showList($dishes);
     }
 }

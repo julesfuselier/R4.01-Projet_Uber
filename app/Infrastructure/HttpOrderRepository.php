@@ -29,21 +29,23 @@ class HttpOrderRepository implements OrderRepositoryInterface
         return $orders;
     }
 
-    public function create(
-        int    $subscriberId,
-        string $orderDate,
-        string $shippingAddress,
-        string $deliveryDate,
-        array  $lines,
-        float  $totalPrice
-    ): bool {
+    public function save(\Domain\Order $order): bool
+    {
+        $lignes = array_map(fn($l) => [
+            'menuId'       => $l->menuId,
+            'menuNom'      => $l->menuName,
+            'quantite'     => $l->quantity,
+            'prixUnitaire' => $l->unitPrice,
+            'prixLigne'    => $l->lineTotal(),
+        ], $order->lines);
+
         $payload = json_encode([
-            'abonneId'         => $subscriberId,
-            'dateCommande'     => $orderDate,
-            'adresseLivraison' => $shippingAddress,
-            'dateLivraison'    => $deliveryDate,
-            'lignes'           => $lines,
-            'prixTotal'        => $totalPrice,
+            'abonneId'         => $order->subscriberId,
+            'dateCommande'     => $order->orderDate,
+            'adresseLivraison' => $order->shippingAddress,
+            'dateLivraison'    => $order->deliveryDate,
+            'lignes'           => $lignes,
+            'prixTotal'        => $order->totalPrice,
         ]);
 
         $ch = curl_init(ApiConfig::ORDERS_API_BASE . '/commandes');
