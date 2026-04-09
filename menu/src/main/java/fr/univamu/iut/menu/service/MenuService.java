@@ -108,4 +108,20 @@ public class MenuService {
         return null;
     }
 
+    public Menu removePlatFromMenu(int menuId, int platId) {
+        Menu menu = this.menuRepo.getMenu(menuId);
+        if (menu == null)
+            throw new IllegalArgumentException("Menu introuvable");
+
+        if (!this.menuRepo.isPlatInMenu(menuId, platId))
+            throw new IllegalArgumentException("Ce plat n'est pas présent dans le menu");
+
+        boolean success = this.menuRepo.removePlatFromMenu(menuId, platId);
+
+        if (success)
+            return this.menuRepo.getMenu(menuId);
+
+        return null;
+    }
+
 }

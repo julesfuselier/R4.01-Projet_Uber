@@ -59,4 +59,12 @@ public interface MenuRepositoryInterface {
      * @return true if plat inserted in menu, false if plat inserted in menu
      */
     public boolean addPlatToMenu(int menuId, int platId);
+
+    /**
+     * Methot that remove plat form menu
+     * @param menuId menu's id
+     * @param platId plat id
+     * @return true if plat removed form menu, else false
+     */
+    public boolean removePlatFromMenu(int menuId, int platId);
 }

@@ -180,7 +180,7 @@ public class MenuRepositoryMariadb implements MenuRepositoryInterface {
 
     @Override
     public boolean isPlatInMenu(int menuId, int platId) {
-        String query = "SELECT 1 FROM menu WHERE menu_id=? AND plat_id=?";
+        String query = "SELECT 1 FROM menu_plat WHERE menu_id=? AND plat_id=?";
         try (PreparedStatement ps = dbConnection.prepareStatement(query)) {
             ps.setInt(1, menuId);
             ps.setInt(2, platId);
@@ -203,6 +203,34 @@ public class MenuRepositoryMariadb implements MenuRepositoryInterface {
                 psInsert.setInt(1, menuId);
                 psInsert.setInt(2, platId);
                 psInsert.executeUpdate();
+            }
+
+            try (PreparedStatement psUpdate = dbConnection.prepareStatement(updateDateMenu)) {
+                psUpdate.setDate(1, Date.valueOf(LocalDate.now()));
+                psUpdate.setInt(2, menuId);
+                psUpdate.executeUpdate();
+            }
+
+            return true;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean removePlatFromMenu(int menuId, int platId) {
+        String deleteLiaision = "DELETE FROM menu_plat WHERE menu_id=? AND plat_id=?";
+        String updateDateMenu = "UPDATE menu SET date_mise_a_jour=? WHERE id=?";
+
+        try {
+            try (PreparedStatement psDelete = dbConnection.prepareStatement(deleteLiaision)) {
+                psDelete.setInt(1, menuId);
+                psDelete.setInt(2, platId);
+
+                int rowsAffected = psDelete.executeUpdate();
+                if (rowsAffected == 0)
+                    return false;
             }
 
             try (PreparedStatement psUpdate = dbConnection.prepareStatement(updateDateMenu)) {

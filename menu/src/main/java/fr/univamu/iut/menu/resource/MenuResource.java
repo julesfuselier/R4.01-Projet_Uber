@@ -158,4 +158,29 @@ public class MenuResource {
         }
     }
 
+    @DELETE
+    @Path("{id}/plats/{platId}")
+    @Produces("application/json")
+    public Response removePlatFromMenu(@PathParam("id") int menuId, @PathParam("platId") int platId) {
+        try {
+            Menu updateMenu = this.menuService.removePlatFromMenu(menuId, platId);
+
+            if (updateMenu == null)
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity("Erreur lors de la suppression du plat")
+                        .build();
+
+            String result = null;
+            try (Jsonb jsonb = JsonbBuilder.create()) {
+                result = jsonb.toJson(updateMenu);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+
+            return Response.ok(result).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
+    }
+
 }
