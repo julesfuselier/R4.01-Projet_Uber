@@ -1,0 +1,24 @@
+<div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+    <h2>Créer un nouveau Menu</h2>
+
+    <form method="POST" action="/menus/create">
+        <div style="margin-bottom: 15px;">
+            <label for="nom" style="display: block; font-weight: bold;">Nom du Menu :</label>
+            <input type="text" id="nom" name="nom" required style="width: 100%; padding: 8px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="creatorId" style="display: block; font-weight: bold;">Créateur :</label>
+            {LISTE_CREATEURS}
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 10px;">Sélectionnez les plats :</label>
+            {LISTE_PLATS}
+        </div>
+
+        <button type="submit" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Enregistrer le menu
+        </button>
+    </form>
+</div>
