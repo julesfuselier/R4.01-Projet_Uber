@@ -26,11 +26,11 @@ public class LigneCommande {
 
     public LigneCommande() {}
 
-    // Ajoute le Getter et Setter pour 'id'
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    // ... Conserve tous les autres Getters et Setters que tu avais déjà mis (menuId, menuNom, etc.)
+
     public int getMenuId() { return menuId; }
     public void setMenuId(int menuId) { this.menuId = menuId; }
     public String getMenuNom() { return menuNom; }
